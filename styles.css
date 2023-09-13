@@ -1,0 +1,108 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald&family=Roboto:wght@400;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  background: #fbfbfb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 2rem;
+}
+
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(60px, 1fr));
+  max-width: 660px;
+  gap: 30px;
+  background: #ffffff;
+  box-shadow: 0 2.3128px 39.3176px rgba(0, 0, 0, 0.25);
+  border-radius: 24px;
+  padding: 75px 100px;
+}
+
+div {
+  text-align: center;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  border: none;
+  outline: none;
+  background: none;
+}
+.month {
+  grid-column: span 5;
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
+  line-height: 32px;
+}
+
+.day-of-week {
+  font-weight: bold;
+}
+
+.knowledge-day,
+.last-day,
+.birth-day,
+.today {
+  position: relative;
+}
+
+.today {
+  background: #ffd200;
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+}
+.birth-day {
+  background: #56d8ff;
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+}
+.last-day {
+  background: url(./images/almostNYGomer.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+}
+.knowledge-day {
+  background: url(./images/hello-september.jpeg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+}
+
+.drop-card {
+  position: absolute;
+  left: -310px;
+  width: 300px;
+  height: 100px;
+  border-radius: 40px;
+  background-color: #fff;
+  -webkit-box-shadow: 0px 0px 48px 0px rgba(60, 60, 60, 1);
+  -moz-box-shadow: 0px 0px 48px 0px rgba(60, 60, 60, 1);
+  box-shadow: 0px 0px 48px 0px rgba(60, 60, 60, 1);
+  z-index: 3;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+
+}
+
