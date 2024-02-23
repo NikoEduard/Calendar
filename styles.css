@@ -89,9 +89,9 @@ button {
 
 .drop-card {
   position: absolute;
-  left: -310px;
-  width: 300px;
-  height: 100px;
+  top: -50px;
+  width: 150px;
+  height: 70px;
   border-radius: 40px;
   background-color: #fff;
   -webkit-box-shadow: 0px 0px 48px 0px rgba(60, 60, 60, 1);
@@ -102,7 +102,12 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
-
+  gap: 10px;
+  
+  font-size: 16px;
+  text-transform: uppercase;
+}
+.drop-card p{
+  margin: 0;
 }
 

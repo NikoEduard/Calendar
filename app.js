@@ -1,9 +1,7 @@
 const now = new Date();
 
 let currentMonth = now.getMonth();
-// console.log(currentMonth);
 let currentYear = now.getFullYear();
-// console.log(currentYear);
 const monthElement = document.querySelector(".month");
 const prevBtn = document.querySelector(".previous");
 const nextBtn = document.querySelector(".next");
@@ -23,25 +21,62 @@ const monthIndexToName = {
 };
 
 const dateNumberElements = [...document.querySelectorAll(".date-number")];
-const getDataAndAddToCard = function (day, month, year) {
-  let daysInYear =
-    (year % 4 === 0 && year % 100 > 0) || year % 400 == 0 ? 366 : 365;
-  // const startDate = new Date(`${year}-01-01T00:00:00`);
-  // const endDate = new Date(`${year}-02-22T00:00:00`);
-  // console.log((endDate - startDate) / 1000 / 60 / 60 / 24);
+
+const backClock = (hours, minutes, seconds) => {
+  let hoursTillTheEnd = 23 - hours;
+  let minutesTillTheEnd = 59 - minutes;
+  if (minutesTillTheEnd < 10) {
+    minutesTillTheEnd = `0${minutesTillTheEnd}`;
+  }
+  let secondsTillTheEnd = 59 - seconds;
+  if (secondsTillTheEnd < 10) {
+    secondsTillTheEnd = `0${secondsTillTheEnd}`;
+  }
+  return `${hoursTillTheEnd}:${minutesTillTheEnd}:${secondsTillTheEnd}`;
 };
+// console.log(backClock(now.getHours(), now.getMinutes(), now.getSeconds()));
 
 const createAndAddCard = function (el, monthIndex, year) {
+  let card = 0;
   el.addEventListener("click", () => {
-    let card = document.createElement("div");
-    card.classList.add("drop-card");
-    // card.innerHTML = `<p>${el.textContent} ${monthIndexToName[monthIndex]}</p>
-    // <p></p>`;
+    if (card === 0) {
+      card = document.createElement("div");
+      card.classList.add("drop-card");
+      let currData = new Date();
+      let currDataHours = currData.getHours();
+      let currDataMinutes = currData.getMinutes();
+      let currDataSeconds = currData.getSeconds();
+      let clickedDate = new Date(year, monthIndex, Number(el.textContent));
+      let daysAmount = Number(currData) - Number(clickedDate);
+      let msToDays = Math.floor(daysAmount / 1000 / 60 / 60 / 24);
 
-    el.append(card);
-    setTimeout(() => {
-      card.remove();
-    }, 2000);
+      if (daysAmount > 0) {
+        card.innerHTML = `<p>${el.textContent} ${
+          monthIndexToName[monthIndex]
+        }</p><p>${msToDays} ${msToDays === 1 ? "day" : "days"} ago</p>`;
+      } else if (daysAmount < 0) {
+        card.innerHTML = `<p>${el.textContent} ${
+          monthIndexToName[monthIndex]
+        }</p><p>in ${Math.abs(msToDays)} ${
+          Math.abs(msToDays) === 1 ? "day" : "days"
+        }</p>`;
+      }
+      if (msToDays >= 0 && msToDays < 1) {
+        card.innerHTML = `<p>${el.textContent} ${
+          monthIndexToName[monthIndex]
+        }</p><p>Day will end in ${backClock(
+          currDataHours,
+          currDataMinutes,
+          currDataSeconds
+        )}`;
+      }
+
+      el.append(card);
+      setTimeout(() => {
+        card.remove();
+        card = 0;
+      }, 2000);
+    }
   });
 };
 
@@ -73,13 +108,13 @@ const renderMonth = (monthIndex, year) => {
     //========================================================================
 
     if (dateNumberElements[i].classList.contains("today")) {
-      createAndAddCard(dateNumberElements[i], monthIndex);
+      createAndAddCard(dateNumberElements[i], monthIndex, year);
     }
 
     //========================================================================
     if (monthIndex === 1 && dateNumberElements[i].textContent == birthDay) {
       dateNumberElements[i].classList.add("birth-day");
-      createAndAddCard(dateNumberElements[i], monthIndex);
+      createAndAddCard(dateNumberElements[i], monthIndex, year);
     } else {
       dateNumberElements[i].classList.remove("birth-day");
     }
@@ -89,7 +124,7 @@ const renderMonth = (monthIndex, year) => {
       dateNumberElements[i].textContent == lastDayOfYear
     ) {
       dateNumberElements[i].classList.add("last-day");
-      createAndAddCard(dateNumberElements[i], monthIndex);
+      createAndAddCard(dateNumberElements[i], monthIndex, year);
     } else {
       dateNumberElements[i].classList.remove("last-day");
     }
